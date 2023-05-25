@@ -1,40 +1,135 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
-    <title>Dashboard Page</title>
-  </head>
-  <body>
-    <h1>Welcome, {{ user[1] }}!</h1>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('users') }}">Users graph</a></li>
-      </ul>
-    </nav>
-    <div class="visualization">
-      <h2>Number of Houses by City</h2>
-      <div id="chart1"></div>
-    </div>
+<head>
+    <style>
+        body {
+          background: linear-gradient(to bottom right, #FFD700, #FF4500);
+          /* Replace #FFD700 and #FF4500 with your desired starting and ending colors */
+          /* You can adjust the direction and colors as per your preference */
+          /* Add any other CSS styles for the body here */
+        }
+        /* Add any other CSS styles for the rest of the page here */
+      </style>
+   <title>Dashboard</title>
+   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
 
-    <div class="visualization">
-      <h2>Distribution of House Prices</h2>
-      <div id="chart2"></div>
-    </div>
 
-    <div class="visualization">
-      <h2>House Prices vs. Number of Bedrooms</h2>
-      <div id="chart3"></div>
-    </div>
+   <style>
+    body{
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+        animation: gradientAnimation 20s ease infinite;
+        background-size: 400% 400%;
+        background-image: linear-gradient(-45deg, #2980b9, #e74c3c, #f1c40f, #2ecc71);
+    }
+      .container {
+         max-width: 900px;
+         margin: 0 auto;
+         padding: 20px;
+      }
+      .card {
+         background-color: #fff;
+         border-radius: 5px;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         padding: 20px;
+         margin-bottom: 20px;
+      }
+      h1, h2 {
+         margin-top: 0;
+         margin-bottom: 20px;
+      }
+      .chart-container {
+         display: flex;
+         flex-wrap: wrap;
+         justify-content: space-between;
+      }
+      .chart-item {
+         flex-basis: calc(50% - 10px);
+         margin-bottom: 20px;
+      }
+      .chart-item:last-child {
+         margin-right: 0;
+      }
+      .chart {
+         height: 400px;
+      }
+      .table-container {
+         margin-top: 40px;
+      }
+      table {
+         width: 100%;
+         border-collapse: collapse;
+      }
+      th, td {
+         padding: 8px;
+         text-align: left;
+         border-bottom: 1px solid #ddd;
+      }
+   </style>
+</head>
+<body>
+   <div class="container">
+      <div class="card">
+         <h1>Welcome, {{ user[1] }}!</h1>
+         <h2>Housing Data</h2>
+         <div class="chart-container">
+            <div class="chart-item">
+               <div id="chart1" class="chart"></div>
+            </div>
+            <div class="chart-item">
+               <div id="chart2" class="chart"></div>
+            </div>
+            <div class="chart-item">
+               <div id="chart3" class="chart"></div>
+            </div>
+            <div class="chart-item">
+               <div id="chart4" class="chart"></div>
+            </div>
+         </div>
+         <div class="table-container">
+            <table id="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>Price</th>
+                    <th>Bedrooms</th>
+                    <th>Bathrooms</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Table rows will be dynamically generated using JavaScript -->
+                </tbody>
+              </table>
+              
+         </div>
+      </div>
+   </div>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <div class="visualization">
-      <h2>Pairwise Correlation Heatmap</h2>
-      <div id="chart4"></div>
-    </div>
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+   <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+   <script src="static\simple-statistics.min.js"></script>
+   <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="dashboard.js"></script>
-  </body>
+   <script>
+      fetch('/data')
+         .then((response) => response.json())
+         .then((housing_data) => {
+            generateHousesByCityChart(housing_data);
+            generateHousePricesChart(housing_data);
+            generatePricesVsBedroomsChart(housing_data);
+            generateCorrelationScatterPlot(housing_data);
+            generateDataTable(housing_data);
+         })
+         .catch((error) => console.error(error));
+   </script>
+</body>
 </html>
