@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title>Users Table</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Users Table</h1>
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Gender</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in users %}
+          <tr>
+            {% for column in row %}
+            <td>{{ column }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="charts-container">
+        <img src="{{ url_for('static', filename='scatter.png') }}" alt="Histogram">
+        <img src="{{ url_for('static', filename='gender_bar_chart.png') }}" alt="Gender Bar Chart">
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title>Login Page</title>
+    <style>
+      .profile-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .profile-picture {
+        width: 100px;
+        height: 100px;
+        border-radius: 10%;
+        background-image: url("https://static.wixstatic.com/media/4d7585_ef5d52bbb40f4b7781ca8eac5f9ddba9~mv2.jpg/v1/fill/w_174,h_160,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/venice_JPG.jpg");
+        background-size: cover;
+        margin-right: 10px;
+      }
+
+      .profile-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .profile-info h2,
+      .profile-info p {
+        margin: 0;
+      }
+
+      .container {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile-container">
+        <div class="profile-picture"></div>
+        <div class="profile-info">
+          <h2>Le Thanh Luan</h2>
+          <p>Student ID: 2022712878</p>
+        </div>
+      </div>
+
+      <div class="login-panel">
+        <h1>Login</h1>
+        <form action="{{ url_for('login') }}" method="post">
+          <label>Username</label>
+          <input type="text" name="username" required /><br />
+          <label>Password</label>
+          <input type="password" name="password" required /><br />
+
+          <input type="submit" value="Login" />
+        </form>
+        <a href="{{ url_for('register') }}">Don't have an account? Register here.</a>
+
+        {% if error %}
+        <div class="error-container">
+          <p class="error-message">{{ error }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

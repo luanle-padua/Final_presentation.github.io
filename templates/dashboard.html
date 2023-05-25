@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>Dashboard Page</title>
+  </head>
+  <body>
+    <h1>Welcome, {{ user[1] }}!</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('users') }}">Users graph</a></li>
+      </ul>
+    </nav>
+    <div class="visualization">
+      <h2>Number of Houses by City</h2>
+      <div id="chart1"></div>
+    </div>
+
+    <div class="visualization">
+      <h2>Distribution of House Prices</h2>
+      <div id="chart2"></div>
+    </div>
+
+    <div class="visualization">
+      <h2>House Prices vs. Number of Bedrooms</h2>
+      <div id="chart3"></div>
+    </div>
+
+    <div class="visualization">
+      <h2>Pairwise Correlation Heatmap</h2>
+      <div id="chart4"></div>
+    </div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>
